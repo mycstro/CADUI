@@ -1,2 +1,2 @@
 # CADUI
-CADUI - Creation of Active Directory CustomUser Information
+CADUI - Creation of Active Directory Custom User Information
