@@ -1,0 +1,41 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block banner %}
+{% if user.is_authenticated %}
+<intro>
+    <p>
+    <h1>Welcome, {% firstof user.get_short_name user.get_username %}</h1>.</p>
+</intro>
+{% else %}
+<intro>
+    <p>
+    <h1>You are not logged in</h1></p>
+</intro>
+{% endif %}
+{% endblock %}
+
+{% block inout %}
+{% if user.is_authenticated %}
+<intro>
+    <p><a class="button small" href="{% url 'logout' %}">logout</a></p>
+</intro>
+{% else %}
+<intro>
+    <a class="button small" href="{% url 'login' %}">login</a>
+</intro>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h2>Howdy. This is CADUI.</h2>
+    <p>A web application that assist you in creating active directory user information.</p>
+</header>
+{% endblock %}
+
+{% block user_nav %}
+
+{% endblock %}

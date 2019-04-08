@@ -1,0 +1,35 @@
+Installation instructions for Win32 memcached
+
+In a command shell, create a directory of your choice name and location
+
+Unzip the archive memcached-win32-1.4.4-14.zip in this location
+
+Run on the command line: memcached.exe -d install
+
+Run, from the Start button "Administrative Tools -> "Services"
+
+Double-click on the listing for "memcached"
+
+In the panel, you will see:
+  * "Startup type:" - this should be "automatic"
+  * "Service status:". Click the start button to start memcached (As shown in the image below)Windows_service
+
+Then, start or stop the memcached service with the following command:
+    memcached.exe -d start
+    memcached.exe -d stop
+
+To change the configuration of memcached, run regedit.exe and navigate to the key
+    "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\memcached".
+Suppose you wish to increase the memory limit of memcached, edit the value of ImagePath to the following:
+"c:\memcached\memcached.exe" -d runservice -m 512
+* Besides '-m 512', you may also append other memcached parameters to the path. Run "c:\memcached\memcached.exe -h" to view the list of available parameters.
+
+Meanwhile, to uninstall the memcached serivce, run the following command:
+    memcached.exe -d uninstall
+
+To view the statistics for memcached, bring up a telnet connection to memcached by the command:
+
+    telnet 127.0.0.1 11211
+    Then, type stats and enter.
+
+Enjoy using memcached!

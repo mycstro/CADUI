@@ -1,0 +1,143 @@
+{% load i18n staticfiles %}
+<!-- templates/base.html -->
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html en-us lang="{{ LANGUAGE_CODE|default:"" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}CADUI{% endblock %}</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap-theme.min.css" rel="stylesheet">
+    {% load static %}
+    <link href="http://localhost:3333/cadui/css/home.css" media="screen" rel="stylesheet">
+    {% block extrastyle %}{% endblock %}
+    {% if LANGUAGE_BIDI %}
+    <link admin href="{% block stylesheet_rtl %}{% static " rel="stylesheet" type="text/css"
+    /css/rtl.css" %}{% endblock %}">{% endif %}
+    {% block extrahead %}{% endblock %}
+    {% block responsive %}
+    <meta content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <link admin href="{% static " rel="stylesheet" type="text/css"
+    /css/responsive.css" %}">
+    {% if LANGUAGE_BIDI %}
+    <link admin href="{% static " rel="stylesheet" type="text/css"
+    /css/responsive_rtl.css" %}">{% endif %}
+    {% endblock %}
+    {% block blockbots %}
+    <meta content="NONE,NOARCHIVE" name="robots">
+    {% endblock %}
+</head>
+{% load i18n %}
+
+<body Z class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+      data-admin-utc-offset="{% now "" %}">
+<div id="page-wrapper">
+    <!-- Header -->
+    <section id="header">
+        <section id="branding">
+            {% block branding %}
+            <!-- Logo -->
+            <h1><a href="{% url 'home' %}">CADUI</a></h1>
+            <p>Create Active Directory User Information</p>
+            {% endblock %}
+        </section>
+        {% block nav-global %}
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>{% block userlinks %}
+                <li class="current"><a href="{% url 'home' %}">Home</a></li>
+                <li>{% block welcome-msg %}
+                    {% trans 'Welcome ' %}
+                    <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+                    {% endblock %}
+                </li>
+                {% if user.is_authenticated %}
+                {% if user.has_usable_password %}
+                <li><a href="{% url 'password_change' %}">{% trans 'Change password' %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'logout' %}">{% trans 'LogOut' %}</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">{% trans 'LogIn' %}</a></li>
+                {% endif %}
+            </ul>
+            {% endblock %}
+        </nav>
+        {% endblock %}
+        <!-- Banner -->
+        <section id="banner">
+            {% block banner %}{% endblock %}
+        </section>
+    </section>
+
+    <!-- Main -->
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% block messages %}
+                    {% if messages %}
+                    <ul class="messagelist">{% for message in messages %}
+                        <li
+                                %} %} class="{{ message.tags }}" endif if message.tags {% {%>{{ message|capfirst }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endblock messages %}
+
+                    <!-- Content -->
+                    <div class="{% block coltype %}colM{% endblock %}" id="content">
+                        {% block pretitle %}{% endblock %}
+                        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+                        {% block content %}
+                        {% block object-tools %}{% endblock %}
+                        {{ content }}
+                        {% endblock %}
+                        {% block sidebar %}{% endblock %}
+                        <br class="clear">
+                    </div>
+                    <!-- END Content -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Copyright -->
+                    <div id="copyright">
+                        <ul class="links">
+                            <li>&copy; Untitled. All rights reserved.</li>
+                            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                {% if not is_popup %}
+                {% block breadcrumbs %}
+                <div class="breadcrumbs">
+                    <a href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                    {% if title %} &rsaquo; {{ title }}{% endif %}
+                </div>
+                {% endblock %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Scripts -->
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.dropotron/1.4.3/jquery.dropotron.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/breakpoints-js@1.0.6/dist/breakpin.js"></script>
+<script src="http://localhost:3333/cadui/js/util.js"></script>oints.m
+<script src="http://localhost:3333/cadui/js/main.js"></script>
+
+</body>
+</html>
